@@ -46,6 +46,7 @@ def analyze_emails(emails: list[dict[str, Any]]) -> str:
 
 [무시할 메일]
 - 뉴스레터, 자동 발송, 광고성 메일
+- @libero.it 등 이탈리아/무료 개인 이메일 도메인에서 온 스폰서십 문의 (스팸으로 처리, 스킵 카운트에 포함)
 
 [출력 형식 - 정확히 지켜주세요]
 📬 메일 브리핑 | {date_str}

@@ -6,7 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from common import load_env_file
-from gmail_fetcher import fetch_recent_emails
+from gmail_fetcher import fetch_unanswered_emails
 from gemini_analyzer import analyze_emails
 from telegram_notify import send_message
 
@@ -15,7 +15,7 @@ def main() -> None:
     load_env_file()
 
     print("메일 가져오는 중...")
-    emails = fetch_recent_emails(hours=24)
+    emails = fetch_unanswered_emails(days=7)
     print(f"총 {len(emails)}건 수집")
 
     print("Gemini 분석 중...")
