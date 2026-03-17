@@ -3,7 +3,7 @@ name: Gmail Daily Briefing
 on:
   workflow_dispatch:
   schedule:
-    - cron: "7 23 * * *"  # 매일 08:07 KST
+    - cron: "50 22 * * *"  # 매일 07:50 KST
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
