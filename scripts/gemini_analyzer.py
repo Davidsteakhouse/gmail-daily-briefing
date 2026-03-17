@@ -6,7 +6,7 @@ from typing import Any
 
 from common import load_env_file, request_json, KST
 
-GEMINI_API_BASE = "https://generativelanguage.googleapis.com/v1beta"
+GEMINI_API_BASE = "https://generativelanguage.googleapis.com/v1"
 
 DAY_KO = {"Mon": "월", "Tue": "화", "Wed": "수", "Thu": "목", "Fri": "금", "Sat": "토", "Sun": "일"}
 
