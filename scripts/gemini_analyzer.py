@@ -6,7 +6,7 @@ from typing import Any
 
 from common import load_env_file, request_json, KST
 
-GEMINI_API_BASE = "https://generativelanguage.googleapis.com/v1"
+GEMINI_API_BASE = "https://generativelanguage.googleapis.com/v1beta"
 
 DAY_KO = {"Mon": "월", "Tue": "화", "Wed": "수", "Thu": "목", "Fri": "금", "Sat": "토", "Sun": "일"}
 
@@ -27,7 +27,7 @@ def analyze_emails(emails: list[dict[str, Any]]) -> str:
         return f"📬 메일 브리핑 | {date_str}\n\n받은 메일이 없습니다."
 
     email_list_text = "\n\n".join(
-        f"[{i+1}] From: {e['from']}\nSubject: {e['subject']}\nSnippet: {e['snippet']}"
+        f"[{i+1}] From: {e['from']}\nSubject: {e['subject']}\nSnippet: {e['snippet'][:200]}"
         for i, e in enumerate(emails)
     )
 
