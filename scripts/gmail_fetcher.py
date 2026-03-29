@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import json
 import os
+import urllib.parse
+import urllib.request
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
@@ -12,13 +15,29 @@ from common import load_env_file
 SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
 
 
+def _exchange_refresh_token(client_id: str, client_secret: str, refresh_token: str) -> str:
+    data = urllib.parse.urlencode({
+        "client_id": client_id,
+        "client_secret": client_secret,
+        "refresh_token": refresh_token,
+        "grant_type": "refresh_token",
+    }).encode()
+    req = urllib.request.Request("https://oauth2.googleapis.com/token", data=data, method="POST")
+    with urllib.request.urlopen(req) as r:
+        return json.loads(r.read())["access_token"]
+
+
 def _get_service():
+    client_id = os.getenv("GMAIL_CLIENT_ID")
+    client_secret = os.getenv("GMAIL_CLIENT_SECRET")
+    refresh_token = os.getenv("GMAIL_REFRESH_TOKEN")
+    access_token = _exchange_refresh_token(client_id, client_secret, refresh_token)
     creds = Credentials(
-        token=None,
-        refresh_token=os.getenv("GMAIL_REFRESH_TOKEN"),
+        token=access_token,
+        refresh_token=refresh_token,
         token_uri="https://oauth2.googleapis.com/token",
-        client_id=os.getenv("GMAIL_CLIENT_ID"),
-        client_secret=os.getenv("GMAIL_CLIENT_SECRET"),
+        client_id=client_id,
+        client_secret=client_secret,
         scopes=SCOPES,
     )
     return build("gmail", "v1", credentials=creds)
